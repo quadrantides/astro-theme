@@ -1,0 +1,231 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load l10n %}
+{% load static %}
+{% load js %}
+{% load crispy_forms_tags %}
+{% load tz %}
+
+{% block section %}
+
+{% if theme %}
+
+	<div id="celebrity-row" class="section">
+
+        <div class="container" data-animation-effect="fadeIn">
+
+            <h4>{% trans "Transit" %} : {{ theme.full_name }}, {{ theme.further_information }}</h4>
+            <div class="row">
+                <div class="col-md-7">
+                    <script>
+                         var config = {{graphics.config | safe}};
+                    </script>
+
+                    {% if show.tropical %}
+
+                        <div id="transit-tropical-wheel">
+
+                        </div>
+                        <script>
+                             var graph_tropical = {{graphics.tropical | safe}};
+                        </script>
+
+                    {% endif %}
+
+                    {% if show.sidereal %}
+
+                        <div id="transit-sidereal-wheel">
+
+                        </div>
+                        <script>
+                             var graph_sidereal = {{graphics.sidereal | safe}};
+                        </script>
+
+                    {% endif %}
+
+                    {% if show.compounded %}
+
+                        <div id="transit-compounded-wheel">
+
+                        </div>
+                        <script>
+                             var graph = {{graphics.compounded | safe}};
+                        </script>
+
+                    {% endif %}
+
+                </div>
+                <div class="col-md-5">
+                    <p>Date de naissance : <b>{{ theme.date }}</b></p>
+                    <p>Lieu de naissance : <b>{{ theme.location.city }}</b>, {{ theme.location.context }}</p>
+                    <p>latitude : <b><i>{{ theme.location.latitude }}</i></b>, longitude : <b><i>{{ theme.location.longitude }}</i></b></p>
+                    <div class="space"></div>
+                    <h6>{% trans "Available customization" %}</h6>
+
+                    <form action="{% url 'theme:transit' theme.id %}" class="uniForm" method="get" id="id-new-transit-form">
+                        <div class="row">
+                            <div class="col-md-12">
+                                {% crispy parameters-form %}
+                            </div>
+                        </div>
+
+                        <input type="hidden" id="id_timezone_offset" class="form-control" name="offset">
+
+                        <div class="row">
+                        <div class="col-md-5">
+                            <!--{% crispy date_form %}-->
+                            <label class="requiredField" for="date">{% trans "New Transit Date" %}
+                                <span class="asteriskField">*</span>
+                            </label>
+                            <div class="">
+                                <input type="date" id="date" class="form-control" name="date" required>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="requiredField" for="time">{% trans "Time (local)" %}
+                                <span class="asteriskField">*</span>
+                            </label>
+                            <div class="">
+                                <input type="time" id="time" step="1" class="form-control black-text-color numberinput" name="time" required>
+                            </div>
+                        </div>
+                    </div>
+                        <div class="space"></div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <button type="submit" class="btn btn-primary">{% trans "DISPLAY" %}</button>
+                            </div>
+                        </div>
+                    </form>
+
+                    <div class="space"></div>
+
+                    <script>
+                       var id_default_selected_button = null;
+                    </script>
+
+                    <div class="cycles-tab">
+                        <h6>{% trans "Other transits of interest related to the main theme cycles" %}</h6>
+                        {% for cycle in cycles %}
+                            <script>
+                               if (id_default_selected_button == null) {
+                                 id_default_selected_button = "button-'{{cycle.tab_name}}')"
+                               }
+                            </script>
+
+                          <button class="cycles-tablinks" onclick="openCycle(event, '{{cycle.tab_name}}')" id="button-'{{cycle.tab_name}}')">{{cycle.tab_name}}</button>
+                        {% endfor %}
+                    </div>
+
+                    {% for cycle in cycles %}
+                        <div id="{{cycle.tab_name}}" class="cycles-tabcontent">
+                            <p>
+                                {% if cycle.is_internal and cycle.aspect.is_conjunction %}
+                                    {% blocktrans with name=cycle.aspect.name conjunction_type=cycle.aspect.conjunction_type orb=cycle.aspect.orb count counter=cycle.aspect.next|length %}
+                                            One {{ conjunction_type }} {{ name }}
+                                        {% plural %}
+                                            List of {{ conjunction_type }} {{ name }}
+                                    {% endblocktrans %}
+                                {% else %}
+                                    {% blocktrans with name=cycle.aspect.name conjunction_type=cycle.aspect.conjunction_type orb=cycle.aspect.orb count counter=cycle.aspect.next|length %}
+                                            One {{ name }}
+                                        {% plural %}
+                                            List of {{ name }}
+                                    {% endblocktrans %}
+
+                                {% endif %}
+                                (orb = {{ cycle.aspect.orb }})
+                            </p>
+
+                            <ul id="ul-cycle">
+                                {% if cycle.is_internal and cycle.aspect.is_conjunction %}
+                                    {% for next in cycle.aspect.next %}
+                                        <li class="li-cycle"><span class="caret-cycle">{{ next.aspect.get_start_year }}</span>
+                                            <ul class="nested-cycle">
+                                                <li><a href="javascript:update_transit_date('id-new-transit-form', 'date', 'time', '{{next.aspect.get_utc_centered_date_iso}}')"><span>{{ next.aspect.start|localize }} / {{ next.aspect.end|localize  }}</span></a></li>
+                                            </ul>
+                                        </li>
+                                    {% endfor %}
+
+                                {% else %}
+                                    {% for aspect in cycle.aspect.next %}
+                                        <li class="li-cycle"><span class="caret-cycle">{{ aspect.get_start_year }}</span>
+                                            <ul class="nested-cycle">
+                                                <!--<li><a href="javascript:load_transit( {{ theme.id }}, '{{aspect.get_utc_centered_date_iso }}')">{{ aspect.start|localize }} / {{ aspect.end|localize  }}</a></li>-->
+                                                <li><a href="javascript:update_transit_date('id-new-transit-form', 'date', 'time', '{{aspect.get_utc_centered_date_iso}}')">{{ aspect.start|localize }} / {{ aspect.end|localize  }}</a></li>
+                                            </ul>
+                                        </li>
+                                    {% endfor %}
+
+                                {% endif %}
+                            </ul>
+                        </div>
+
+                    {% endfor %}
+
+                </div>
+            </div>
+
+        </div>
+
+	</div>
+
+    <div class="row">
+        <h6>
+            <form action="{% url 'theme:generate_pdf' theme.id %}" method="post">
+                {% csrf_token %}
+                <span>Télécharger le rapport
+                    <button class="btn-theme-download"><i class="fa fa-download"></i></button>
+                </span>
+            </form>
+        </h6>
+    </div>
+
+{% else %}
+
+    <div class="row">
+        <div class="col-md-12">
+            <p>Veuillez nous excuser, nous ne sommes pas en mesure d'afficher le thème demandé</p>
+        </div>
+    </div>
+
+{% endif %}
+
+
+{% endblock section %}
+
+
+{% block extra_js %}
+
+    <script type="text/javascript" src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+	<script type="text/javascript" src="{% static 'theme/js/initialize.js' %}"></script>
+	<script type="text/javascript" src="{% static 'theme/js/celebrity/cycles.js' %}"></script>
+	<script type="text/javascript" src="{% static 'theme/js/celebrity/settings.js' %}"></script>
+	<script type="text/javascript" src="{% static 'theme/js/date.js' %}"></script>
+	<script type="text/javascript" src="{% static 'theme/js/transit.js' %}"></script>
+	<script type="text/javascript" src="{% static 'theme/js/cycles.js' %}"></script>
+
+
+	<script>
+	$('#id-new-transit-form').submit(function() {
+       var date = new Date();
+       document.getElementById("id_timezone_offset").value = date.getTimezoneOffset()
+       return true; // return false to cancel form action
+});
+
+	set_transit_date("date", "time", "{{utc_transit_date_iso }}");
+
+    document.getElementById(id_default_selected_button).click();
+
+	if ({{show.tropical | js}}) {
+			initialize("transit-tropical-wheel", graph_tropical, config);
+	}
+	if ({{show.sidereal | js}}) {
+			initialize("transit-sidereal-wheel", graph_sidereal, config);
+	}
+	if ({{show.compounded | js}}) {
+			initialize("transit-compounded-wheel", graph_compounded, config);
+	}
+	</script>
+
+{% endblock extra_js %}

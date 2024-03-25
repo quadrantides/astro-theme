@@ -1,0 +1,128 @@
+{% extends "base.html" %}
+
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block section %}
+
+	<div id="celebrity-row" class="section">
+        <div class="container" data-animation-effect="fadeIn">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class=media">
+                        <p>Sur cette page, vous pouvez :</p>
+                        <ul>
+                            <li>Choisir les paramètres de votre nouveau thème,</li>
+                            <li>Afficher votre thème,</li>
+                            <li>Télécharger ce thème sous forme de fichier pdf.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <h4>Nouveau thème</h4>
+            <form action="{% url 'theme:save' %}" class="uniForm" method="post" id="id-new-theme-form">
+                <div class="row">
+                    <div class="col-md-12">
+                        {% crispy person_form %}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="row">
+                            <h6>Date de naissance</h6>
+                            <div class="col col-md-4">
+                                <label class="requiredField" for="date">Date
+                                    <span class="asteriskField">*</span>
+                                </label>
+                                <div class="">
+                                    <input type="date" id="date" class="form-control" name="str_date" required>
+                                </div>
+                            </div>
+                            <div class="col col-md-3">
+                                <label class="requiredField" for="time">Heure locale
+                                    <span class="asteriskField">*</span>
+                                </label>
+                                <div class="">
+                                    <input type="time" id="time" step="1" class="form-control black-text-color numberinput" name="str_time" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                {% crispy location_form %}
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-md-4">
+                        <h6>Si le lieu de naissance se situe hors de France, utilisez cette carte</h6>
+                        <div class="div-leaflet-map">
+                            <div id="map">
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-2">
+                        {% if success %}
+                        <input type="hidden" value="create" name="action" >
+                        <button type="submit" class="btn btn-primary">CRÉER LE THÈME</button>
+                        {% else %}
+                        <input type="hidden" value="update" name="action" >
+                        <button type="submit" class="btn btn-warning">MODIFIER LE THÈME</button>
+                        {% endif %}
+                    </div>
+                    <div class="col-md-10">
+                        {% if message %}
+                           <p class="text-danger">{{message}}</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </form>
+        </div>
+	</div>
+
+{% endblock %}
+
+
+{% block extra_js %}
+
+	<!-- Leaflet javascript -->
+
+	<script type="text/javascript" src="{% static 'leaflet/0.7.5/leaflet.js' %}"></script>
+	<script type="text/javascript" src="{% static 'leaflet/plugins/Leaflet.label/leaflet.label.js' %}"></script>
+	<script type="text/javascript" src="{% static 'leaflet/plugins/leaflet.markercluster/leaflet.markercluster.js' %}"></script>
+
+    <!-- TRANSCEND Leaflet map Scripts -->
+
+	<script type="text/javascript" src="{% static 'theme/js/date.js' %}"></script>
+	<script type="text/javascript" src="{% static 'theme/js/map.js' %}"></script>
+
+	<script>
+
+
+        set_date("date", "time", "{{date}}")
+
+
+
+        var latitude = parseFloat(document.getElementById("id_latitude").value)
+        var longitude = parseFloat(document.getElementById("id_longitude").value)
+
+        create_map(latitude, longitude)
+
+	    var ids = {
+            city : document.getElementById("id_city"),
+            latitude : document.getElementById("id_latitude"),
+            longitude : document.getElementById("id_longitude"),
+            context : document.getElementById("id_context")
+	    }
+        add_city_selector_listener(ids);
+
+	</script>
+
+
+{% endblock extra_js %}

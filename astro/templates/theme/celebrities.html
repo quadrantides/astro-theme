@@ -1,0 +1,142 @@
+{% extends "base.html" %}
+
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block section %}
+
+	<div id="section" class="section">
+
+        {% block content %}
+        <div class="container" data-animation-effect="fadeIn">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class=media">
+                        <p>Options disponibles</p>
+                        <ul>
+                            <li>Afficher le thème d'une personnalité,</li>
+                            <li>Paramétrer le thème que vous souhaitez.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        {% endblock %}
+
+        {% block celebrities %}
+        <div class="container" data-animation-effect="fadeIn">
+            <div class="row align-selection-group">
+                <div class="col-md-2">
+                    <form method="get" onsubmit="get_new_theme(this);">
+                        <input type="submit" value="NOUVEAU THÈME">
+                    </form>
+                </div>
+                <div class="col-md-5">
+                    {% if celebrities %}
+                        <script>
+                            var celebrities = {{ celebrities | safe }}
+                        </script>
+                        <form method="get" class="form-inline" onsubmit="get_celebrity(this);">
+                            <label for="id_celebrity"><b>Nos thèmes</b></label>
+                            <input
+                                    type="text"
+                                    class="form-control"
+                                    id="id_celebrity"
+                                    placeholder="Ex : Emmanuel Macron"
+                                    name="celebrity"
+                                    required>
+
+                            <input type="hidden" id="id_selected_theme">
+                            <input
+                                type="submit"
+                                value="AFFICHER"
+                                name="afficher">
+
+                        </form>
+                    {% else %}
+                        <script>
+                            var celebrities = null
+                        </script>
+                        <p>Il n'y a encore aucun thème enregistré en base de données</p>
+                    {% endif %}
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-md-12 form-inline">
+                    <!--{% if celebrities %}-->
+                        <!--<script>-->
+                            <!--var celebrities = {{ celebrities | safe }}-->
+                        <!--</script>-->
+                        <!--<div class="form-group">-->
+                            <!--<form method="get" class="form" onsubmit="get_celebrity(this);">-->
+                                <!--<label for="celebrity"><b>Nos thèmes</b></label>-->
+                                <!--<input-->
+                                        <!--type="text"-->
+                                        <!--class="form-control"-->
+                                        <!--id="id_celebrity"-->
+                                        <!--placeholder="Ex : Emmanuel Macron"-->
+                                        <!--name="celebrity"-->
+                                        <!--required>-->
+
+                                <!--<input type="hidden" id="id_selected_theme">-->
+                                <!--<input-->
+                                    <!--type="submit"-->
+                                    <!--value="AFFICHER"-->
+                                    <!--name="afficher">-->
+                            <!--</form>-->
+                        <!--</div>-->
+
+
+                        <!--<input type="submit" value="NOUVEAU THÈME" style="margin:0 0 auto;" onclick="javascript: window.location.href='{% url 'theme:new' %}';">-->
+
+                    <!--{% else %}-->
+                        <!--<script>-->
+                            <!--var celebrities = null-->
+                        <!--</script>-->
+                        <!--<p>Il n'y a encore aucun thème enregistré en base de données</p>-->
+                    <!--{% endif %}-->
+
+                </div>
+
+
+
+            </div>
+
+        </div>
+
+        {% endblock %}
+
+	</div>
+
+{% endblock %}
+
+
+
+
+{% block extra_js %}
+
+	<script type="text/javascript" src="{% static 'theme/js/celebrities.js' %}"></script>
+
+	<script>
+	    function get_celebrity(form) {
+	       var theme_id = document.getElementById("id_selected_theme").value
+	       form.action=theme_id + "/"
+	    }
+	    function get_new_theme(form) {
+	       form.action="{% url 'theme:new' %}"
+	    }
+	    if (celebrities) {
+
+            find_celebrity(
+                document.getElementById("id_celebrity"),
+                document.getElementById("id_selected_theme"),
+                celebrities);
+
+	    }
+
+	</script>
+
+{% endblock extra_js %}

@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+
+{% block section %}
+
+    {% if form.errors %}
+    <p>Your username and password didn't match. Please try again.</p>
+    {% endif %}
+
+    {% if next %}
+        {% if user.is_authenticated %}
+        <p>Your account doesn't have access to this page. To proceed,
+        please login with an account that has access.</p>
+        {% else %}
+        <p>Please login to see this page.</p>
+        {% endif %}
+    {% endif %}
+
+    <!--<form method="post" action="{% url 'authentication' %}">-->
+    <!--{% csrf_token %}-->
+    <!--<table>-->
+    <!--<tr>-->
+        <!--<td>{{ form.username.label_tag }}</td>-->
+        <!--<td>{{ form.username }}</td>-->
+    <!--</tr>-->
+    <!--<tr>-->
+        <!--<td>{{ form.password.label_tag }}</td>-->
+        <!--<td>{{ form.password }}</td>-->
+    <!--</tr>-->
+    <!--</table>-->
+
+    <!--<input type="submit" value="Se connecter">-->
+    <!--<input type="hidden" name="next" value="{{ next }}">-->
+    <!--</form>-->
+
+    <!--{# Assumes you setup the password_reset view in your URLconf #}-->
+    <!--<p><a href="{% url 'password_reset' %}">Lost password?</a></p>-->
+
+
+      <form class="modal-content animate" action="{% url 'authentication' %}" method="post">
+        <!-- <div class="imgcontainer">
+          <img src="img_avatar2.png" alt="Avatar" class="avatar">
+        </div> -->
+        {% csrf_token %}
+
+        <div class="container form-group">
+          <label for="username"><b>{{ form.username.label_tag }}</b></label>
+          <input type="text" placeholder="Saisissez votre identifiant" name="username" required>
+
+          <label for="password"><b>{{ form.password.label_tag }}</b></label>
+          <input type="password" placeholder="Saisissez votre mot de passe" name="password" required>
+
+          <button class="login_button" type="submit">Se connecter</button>
+          <label>
+            <input type="checkbox" checked="checked" name="remember"> Mémorisation des codes d'accès
+          </label>
+        </div>
+
+        <div class="container" style="background-color:#f1f1f1">
+          <span class="psw"><a href="{% url 'password_reset' %}">Mot de passe oublié ?</a></span>
+        </div>
+      </form>
+
+{% endblock %}

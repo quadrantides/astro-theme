@@ -1,0 +1,497 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-08-27 10:25+0200\n"
+"PO-Revision-Date: 2020-08-27 11:38+0200\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Poedit 2.3.1\n"
+
+#: aspects/constants.py:17
+msgid "conjunction"
+msgstr "conjonction"
+
+#: aspects/constants.py:18
+msgid "semi-sextile"
+msgstr "semi-sextile"
+
+#: aspects/constants.py:19
+msgid "semi-square"
+msgstr "semi-carré"
+
+#: aspects/constants.py:20
+msgid "sextile"
+msgstr "sextile"
+
+#: aspects/constants.py:21
+msgid "quintile"
+msgstr "quintile"
+
+#: aspects/constants.py:22
+msgid "square"
+msgstr "carré"
+
+#: aspects/constants.py:23
+msgid "sesquiquadrate"
+msgstr "sesqui-carré"
+
+#: aspects/constants.py:24
+msgid "biquintile"
+msgstr "biquintile"
+
+#: aspects/constants.py:25
+msgid "quincunx"
+msgstr "quinconce"
+
+#: aspects/constants.py:26
+msgid "opposition"
+msgstr "opposition"
+
+#: aspects/constants.py:27
+msgid "trine"
+msgstr "trigone"
+
+#: aspects/models.py:11
+msgid "inferior"
+msgstr "inférieure"
+
+#: aspects/models.py:11
+msgid "superior"
+msgstr "supérieure"
+
+#: aspects/models.py:38
+msgid "Aborted requested. ASPECT Table undefined for <{}> cycle"
+msgstr ""
+"La demande n'a pas abouti. La Table ASPECT n'existe pas pour le cycle <{}>"
+
+#: aspects/models.py:68
+msgid "Aborted requested. COVERAGE Table undefined for <{}> cycle"
+msgstr ""
+"La demande n'a pas abouti. La Table COVERAGE n'existe pas pour le cycle <{}>"
+
+#: aspects/models.py:77
+msgid "Planet"
+msgstr "Planète"
+
+#: aspects/models.py:97 aspects/models.py:126
+msgid "planet 1"
+msgstr "planète 1"
+
+#: aspects/models.py:107 aspects/models.py:130
+msgid "planet 2"
+msgstr "planète 2"
+
+#: aspects/models.py:112
+msgid "is an internal cycle ?"
+msgstr "est un cycle interne ?"
+
+#: aspects/models.py:119
+msgid "more information"
+msgstr "information complémentaire"
+
+#: aspects/models.py:176 aspects/models.py:301
+msgid "is an active record ?"
+msgstr "enregistrement actif ?"
+
+#: aspects/models.py:237
+msgid "Start"
+msgstr "Début"
+
+#: aspects/models.py:241
+msgid "End"
+msgstr "Fin"
+
+#: aspects/models.py:245
+msgid "Exact"
+msgstr "Exact"
+
+#: aspects/models.py:246
+msgid "Date not defined"
+msgstr "Date non définie"
+
+#: aspects/models.py:293 aspects/models.py:312
+msgid "Type"
+msgstr "Type"
+
+#: aspects/models.py:296 aspects/models.py:316
+msgid "Is exact ?"
+msgstr "Est-elle exacte ?"
+
+#: aspects/models.py:317
+msgid "Yes"
+msgstr "Oui"
+
+#: aspects/models.py:317
+msgid "No"
+msgstr "Non"
+
+#: astro/settings.py:140
+msgid "English"
+msgstr "Anglais"
+
+#: astro/settings.py:141
+msgid "French"
+msgstr "Français"
+
+#: astro/templates/base.html:108
+msgid "PRODUCTS"
+msgstr "PRODUITS"
+
+#: astro/templates/celebrity/base.html:70
+msgid "Theme"
+msgstr "Thème"
+
+#: astro/templates/celebrity/base.html:71
+#: astro/templates/celebrity/index.html:14
+#: astro/templates/theme/celebrity.html:99
+msgid "Transit"
+msgstr "Transit"
+
+#: astro/templates/celebrity/base.html:76
+msgid "You can modify the current displayed theme"
+msgstr "Vous pouvez modifier le thème qui est actuellement affiché"
+
+#: astro/templates/celebrity/base.html:84
+msgid "Transit available by date"
+msgstr "Liste des transits que vous pouvez afficher"
+
+#: astro/templates/celebrity/base.html:86
+#: astro/templates/celebrity/index.html:23
+#: astro/templates/theme/celebrity.html:104
+msgid "Current transit"
+msgstr "Transit"
+
+#: astro/templates/celebrity/base.html:92
+#: astro/templates/celebrity/index.html:29
+#: astro/templates/theme/celebrity.html:110
+msgid "Date"
+msgstr "Date"
+
+#: astro/templates/celebrity/base.html:100
+#: astro/templates/celebrity/index.html:37
+#: astro/templates/theme/celebrity.html:118
+msgid "Local time"
+msgstr "Temps local"
+
+#: astro/templates/celebrity/base.html:109
+#: astro/templates/celebrity/index.html:46
+#: astro/templates/theme/celebrity.html:127
+msgid "DISPLAY"
+msgstr "AFFICHER"
+
+#: astro/templates/celebrity/base.html:117
+msgid "Other transits related to the following cycles of interest"
+msgstr "Liste des transits des cycles liés au thème"
+
+#: astro/templates/celebrity/base.html:128
+#: astro/templates/theme/celebrity.html:146
+#, python-format
+msgid ""
+"\n"
+"                                                One %(conjunction_type)s "
+"%(name)s\n"
+"                                            "
+msgid_plural ""
+"\n"
+"                                                List of %(conjunction_type)s "
+"%(name)s\n"
+"                                        "
+msgstr[0] ""
+"\n"
+"                                                Une %(name)s "
+"%(conjunction_type)s\n"
+"                                            "
+msgstr[1] ""
+"\n"
+"                                                Liste des %(name)s "
+"%(conjunction_type)s\n"
+"                                        "
+
+#: astro/templates/celebrity/base.html:134
+#: astro/templates/theme/celebrity.html:152
+#, python-format
+msgid ""
+"\n"
+"                                                One %(name)s\n"
+"                                            "
+msgid_plural ""
+"\n"
+"                                                List of %(name)s\n"
+"                                        "
+msgstr[0] ""
+"\n"
+"                                            Un %(name)s\n"
+"                                            "
+msgstr[1] ""
+"\n"
+"                                            Liste des %(name)s\n"
+"                                        "
+
+#: astro/templates/celebrity/index.html:54
+#: astro/templates/theme/celebrity.html:135
+msgid "Transits related to the following cycles of interest"
+msgstr "Liste des transits des cycles liés au thème"
+
+#: astro/templates/celebrity/index.html:65
+#, python-format
+msgid ""
+"\n"
+"                                            One %(conjunction_type)s "
+"%(name)s\n"
+"                                        "
+msgid_plural ""
+"\n"
+"                                            List of %(conjunction_type)s "
+"%(name)s\n"
+"                                    "
+msgstr[0] ""
+"\n"
+"                                                Une %(name)s "
+"%(conjunction_type)s\n"
+"                                            "
+msgstr[1] ""
+"\n"
+"                                                Liste des %(name)s "
+"%(conjunction_type)s\n"
+"                                        "
+
+#: astro/templates/celebrity/index.html:71
+#, python-format
+msgid ""
+"\n"
+"                                            One %(name)s\n"
+"                                        "
+msgid_plural ""
+"\n"
+"                                            List of %(name)s\n"
+"                                    "
+msgstr[0] ""
+"\n"
+"                                            Un %(name)s\n"
+"                                            "
+msgstr[1] ""
+"\n"
+"                                            Liste des %(name)s\n"
+"                                        "
+
+#: astro/templates/index.html:32
+msgid "You can change of houses system"
+msgstr "Vous pouvez changer de système de maisons"
+
+#: astro/views/index.py:39
+msgid "Anonymous theme"
+msgstr "Thème anonyme"
+
+#: transcend/constants.py:44
+msgid "Ari"
+msgstr "Bél"
+
+#: transcend/constants.py:44
+msgid "Tau"
+msgstr "Tau"
+
+#: transcend/constants.py:44
+msgid "Gem"
+msgstr "Gém"
+
+#: transcend/constants.py:44
+msgid "Cnc"
+msgstr "Can"
+
+#: transcend/constants.py:45
+msgid "Leo"
+msgstr "Lio"
+
+#: transcend/constants.py:45
+msgid "Vir"
+msgstr "Vie"
+
+#: transcend/constants.py:45
+msgid "Lib"
+msgstr "Bal"
+
+#: transcend/constants.py:45
+msgid "Sco"
+msgstr "Sco"
+
+#: transcend/constants.py:46
+msgid "Sgr"
+msgstr "Sag"
+
+#: transcend/constants.py:46
+msgid "Cap"
+msgstr "Cap"
+
+#: transcend/constants.py:46
+msgid "Aqr"
+msgstr "Ver"
+
+#: transcend/constants.py:46
+msgid "Psc"
+msgstr "Poi"
+
+#: transcend/constants.py:51
+msgid "aries"
+msgstr "bélier"
+
+#: transcend/constants.py:51
+msgid "taurus"
+msgstr "taureau"
+
+#: transcend/constants.py:51
+msgid "gemini"
+msgstr "gémeaux"
+
+#: transcend/constants.py:51
+msgid "cancer"
+msgstr "cancer"
+
+#: transcend/constants.py:52
+msgid "leo"
+msgstr "lion"
+
+#: transcend/constants.py:52
+msgid "virgo"
+msgstr "vierge"
+
+#: transcend/constants.py:52
+msgid "libra"
+msgstr "balance"
+
+#: transcend/constants.py:52
+msgid "scorpio"
+msgstr "scorpion"
+
+#: transcend/constants.py:53
+msgid "sagittarius"
+msgstr "sagittaire"
+
+#: transcend/constants.py:53
+msgid "capricorn"
+msgstr "capricorne"
+
+#: transcend/constants.py:53
+msgid "aquarius"
+msgstr "verseau"
+
+#: transcend/constants.py:53
+msgid "pisces"
+msgstr "poissons"
+
+#: transcend/constants.py:57
+msgid "fire"
+msgstr "feu"
+
+#: transcend/constants.py:57 transcend/constants.py:82
+msgid "earth"
+msgstr "terre"
+
+#: transcend/constants.py:57
+msgid "air"
+msgstr "air"
+
+#: transcend/constants.py:57
+msgid "water"
+msgstr "eau"
+
+#: transcend/constants.py:77
+msgid "sun"
+msgstr "soleil"
+
+#: transcend/constants.py:77
+msgid "moon"
+msgstr "lune"
+
+#: transcend/constants.py:77
+msgid "mercury"
+msgstr "mercure"
+
+#: transcend/constants.py:77
+msgid "venus"
+msgstr "vénus"
+
+#: transcend/constants.py:77
+msgid "mars"
+msgstr "mars"
+
+#: transcend/constants.py:77
+msgid "jupiter"
+msgstr "jupiter"
+
+#: transcend/constants.py:77
+msgid "saturn"
+msgstr "saturne"
+
+#: transcend/constants.py:78
+msgid "uranus"
+msgstr "uranus"
+
+#: transcend/constants.py:78
+msgid "neptune"
+msgstr "neptune"
+
+#: transcend/constants.py:78
+msgid "pluto"
+msgstr "pluton"
+
+#: transcend/constants.py:82
+msgid "chiron"
+msgstr "chiron"
+
+#: transcend/constants.py:82
+msgid "pholus"
+msgstr "pholus"
+
+#: transcend/constants.py:82
+msgid "ceres"
+msgstr "cérès"
+
+#: transcend/constants.py:82
+msgid "pallas"
+msgstr "pallas"
+
+#: transcend/constants.py:82
+msgid "juno"
+msgstr "junon"
+
+#: transcend/constants.py:82
+msgid "vesta"
+msgstr "vesta"
+
+#~ msgid "Cycles of interest for the theme"
+#~ msgstr "Cycles d’intérêt pour le thème"
+
+#~ msgid ""
+#~ "\n"
+#~ "                                            One %(cycle.aspect.name)s "
+#~ "%(cycle.aspect.conjunction_type)s\n"
+#~ "                                            "
+#~ msgid_plural ""
+#~ "\n"
+#~ "                                            List of %(cycle.aspect.name)s "
+#~ "%(cycle.aspect.conjunction_type)s\n"
+#~ "                                        "
+#~ msgstr[0] ""
+#~ "\n"
+#~ "                                            Un(e) %(cycle.aspect.name)s "
+#~ "%(cycle.aspect.conjunction_type)s\n"
+#~ "                                            "
+#~ msgstr[1] ""
+#~ "\n"
+#~ "                                            Liste des %(cycle.aspect."
+#~ "name)s %(cycle.aspect.conjunction_type)s\n"
+#~ "                                        "
+
+#~ msgid "List of"
+#~ msgstr "Liste des"

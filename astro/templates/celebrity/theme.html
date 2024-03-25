@@ -1,0 +1,177 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load l10n %}
+{% load static %}
+{% load js %}
+{% load crispy_forms_tags %}
+
+{% block section %}
+
+{% if theme %}
+
+	<div id="celebrity-row" class="section">
+
+        <div class="container" data-animation-effect="fadeIn">
+            <div class="row">
+                <h4>Thème : {{ theme.full_name }}, {{ theme.further_information }}</h4>
+            </div>
+            <div class="row">
+                <script>
+                     var config = {{graphics.config | safe}};
+                </script>
+                {% if show.tropical %}
+
+                    <div class="col-md-7">
+
+                        <div id="tropical-wheel">
+
+                        </div>
+                        <script>
+                             var graph_tropical = {{graphics.tropical | safe}};
+                        </script>
+                    </div>
+
+                {% endif %}
+
+                {% if show.sidereal %}
+
+                    <div class="col-md-7">
+
+                        <div id="sidereal-wheel">
+
+                        </div>
+                        <script>
+                             var graph_sidereal = {{graphics.sidereal | safe}};
+                        </script>
+                    </div>
+
+                {% endif %}
+
+                {% if show.compounded %}
+
+                    <div class="col-md-7">
+
+                        <div id="compounded-wheel">
+
+                        </div>
+                        <script>
+                             var graph = {{graphics.compounded | safe}};
+                        </script>
+                    </div>
+
+                {% endif %}
+
+                <div class="col-md-5">
+                    <p>Date de naissance : <b>{{ theme.date }}</b></p>
+                    <p>Lieu de naissance : <b>{{ theme.location.city }}</b>, {{ theme.location.context }}</p>
+                    <p>latitude : <b><i>{{ theme.location.latitude }}</i></b>, longitude : <b><i>{{ theme.location.longitude }}</i></b></p>
+                    <div class="space"></div>
+                    <h6>{% trans "Available customization" %}</h6>
+                    <form action="{% url 'theme:theme' theme.id %}" class="uniForm" method="post" id="id-new-theme-form">
+                         {% csrf_token %}
+                        <div class="row">
+                            <div class="col-md-12">
+                                {% crispy parameters-form %}
+                            </div>
+                        </div>
+                        <div class="space"></div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <button type="submit" class="btn btn-primary">{% trans "DISPLAY" %}</button>
+                            </div>
+                        </div>
+                    </form>
+                    <!--<form action="{% url 'theme:transit' theme.id %}" class="uniForm" method="post" id="id-new-transit-form">-->
+                        <!--<input type="hidden" id="id_timezone_offset" class="form-control" name="offset">-->
+                        <!--<div class="row">-->
+                            <!--<div class="col-md-5">-->
+                                <!--<label class="requiredField" for="date">{% trans "New Transit Date" %}-->
+                                    <!--<span class="asteriskField">*</span>-->
+                                <!--</label>-->
+                                <!--<div class="">-->
+                                    <!--<input type="date" id="date" class="form-control" name="str_transit_date" required>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                            <!--<div class="col-md-4">-->
+                                <!--<label class="requiredField" for="time">{% trans "Time (local)" %}-->
+                                    <!--<span class="asteriskField">*</span>-->
+                                <!--</label>-->
+                                <!--<div class="">-->
+                                    <!--<input type="time" id="time" class="form-control black-text-color numberinput" name="str_transit_time" required>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                        <!--<div class="space"></div>-->
+                        <!--<div class="row">-->
+                            <!--<div class="col-md-12">-->
+                                <!--<button type="submit" class="btn btn-primary">{% trans "DISPLAY" %}</button>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</form>-->
+                </div>
+
+            </div>
+
+        </div>
+
+	</div>
+
+
+	{% block index %}
+
+	{% endblock index %}
+
+    <div class="row">
+        <h6>
+            <form action="{% url 'theme:generate_pdf' theme.id %}" method="post">
+                {% csrf_token %}
+                <span>Télécharger le rapport
+                    <button class="btn-theme-download"><i class="fa fa-download"></i></button>
+                </span>
+            </form>
+        </h6>
+    </div>
+
+{% else %}
+
+    <div class="row">
+        <div class="col-md-12">
+            <p>Veuillez nous excuser, nous ne sommes pas en mesure d'afficher le thème demandé</p>
+        </div>
+    </div>
+
+{% endif %}
+
+
+{% endblock section %}
+
+
+{% block extra_js %}
+
+    <script type="text/javascript" src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+	<script type="text/javascript" src="{% static 'theme/js/initialize.js' %}"></script>
+	<script type="text/javascript" src="{% static 'theme/js/celebrity/cycles.js' %}"></script>
+	<script type="text/javascript" src="{% static 'theme/js/celebrity/settings.js' %}"></script>
+	<script type="text/javascript" src="{% static 'theme/js/date.js' %}"></script>
+	<script type="text/javascript" src="{% static 'theme/js/transit.js' %}"></script>
+
+	<script>
+
+	$('#id-new-transit-form').submit(function() {
+       var date = new Date();
+       document.getElementById("id_timezone_offset").value = date.getTimezoneOffset()
+       return true; // return false to cancel form action
+});
+
+	if ({{show.tropical | js}}) {
+			initialize("tropical-wheel", graph_tropical, config);
+	}
+	if ({{show.sidereal | js}}) {
+			initialize("sidereal-wheel", graph_sidereal, config);
+	}
+	if ({{show.compounded | js}}) {
+			initialize("compounded-wheel", graph_compounded, config);
+	}
+	</script>
+
+{% endblock extra_js %}

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>retrogrades</title>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+<style>
+
+.graph-div {
+    float: left;
+    width:400px;
+    height:400px;
+}
+
+.description-div {
+  text-align: center;
+    float:right%;
+}
+
+.description-text {
+  display:block;
+  font-size: 10px;
+  font-family: Arial;
+}
+</style>
+</head>
+<body>
+
+    <div id="myDiv" class="graph-div"></div>
+    <center>
+    <div id="hover-info-begin" class="description-div">
+        <span id="hover-info-title" class="description-text"></span>
+        <span id="hover-info-begin-text" class="description-text""></span>
+        <span id="hover-info-end-text" class="description-text"></span>
+    </div >
+    </center>
+<script>
+var json = ;
+
+var config = {'displayModeBar': false}
+
+var myPlot = document.getElementById('myDiv'),
+    title_p = document.getElementById('hover-info-title'),
+    begin_p = document.getElementById('hover-info-begin-text'),
+    end_p = document.getElementById('hover-info-end-text'),
+    data = json.data;
+    layout = json.layout;
+
+Plotly.newPlot('myDiv', json.data, json.layout, config);
+
+myPlot.on('plotly_hover', function(data){
+
+    var title = data.points.map(function(d){
+
+      return (d.data.customdata[0][0]);
+    });
+
+    title_p.innerHTML = title;
+
+    var begin = data.points.map(function(d){
+
+      return (d.data.customdata[0][1]);
+    });
+
+    begin_p.innerHTML = begin;
+
+    var end = data.points.map(function(d){
+
+      return (d.data.customdata[0][2]);
+    });
+
+    end_p.innerHTML = end;
+
+})
+ .on('plotly_unhover', function(data){
+    title_p.innerHTML = '';
+    begin_p.innerHTML = '';
+    end_p.innerHTML = '';
+});
+
+</script>
+</body>
+</html>

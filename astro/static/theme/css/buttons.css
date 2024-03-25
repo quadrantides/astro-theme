@@ -1,0 +1,13 @@
+.btn-theme-download {
+  background-color: DodgerBlue;
+  border: none;
+  color: white;
+  padding: 6px 15px;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+/* Darker background on mouse-over */
+.btn-theme-download:hover {
+  background-color: RoyalBlue;
+}

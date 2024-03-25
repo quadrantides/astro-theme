@@ -1,0 +1,207 @@
+.transcend-radio-rotated {
+    -ms-transform: rotate(270deg); /* IE 9 */
+    -webkit-transform: rotate(270deg); /* Chrome, Safari, Opera */
+    transform: rotate(270deg);
+}
+
+.parameters-content {
+  float: left;
+  minWidth:400px;
+}
+
+.naissance-select {
+    float:left;
+}
+
+.naissance-select input {
+    height:34px;
+}
+
+.openastro-custom-select select {
+  width:200px;
+  }
+
+.sidereal-custom-select {
+  margin-top:5%;
+  }
+
+.openastro-custom-select {
+  margin-top:10%;
+    float:left;
+  font-size: 13px;
+  font-family: Arial;
+  text-align: left;
+}
+
+
+ /* The container must be positioned relative: */
+.custom-select {
+  display: inline-block;
+  padding: 7px 8px;
+  float: left;
+  font-size: 13px;
+  font-family: Arial;
+}
+
+
+
+.select-selected {
+  background-color: DodgerBlue;
+}
+
+/* Style the arrow inside the select element: */
+.select-selected:after {
+  position: absolute;
+  content: "";
+  top: 14px;
+  right: 10px;
+  width: 0;
+  height: 0;
+  border: 6px solid transparent;
+  border-color: #fff transparent transparent transparent;
+}
+
+/* Point the arrow upwards when the select box is open (active): */
+.select-selected.select-arrow-active:after {
+  border-color: transparent transparent #fff transparent;
+  top: 7px;
+}
+
+/* style the items (options), including the selected item: */
+.select-items div,.select-selected {
+  color: #ffffff;
+  padding: 8px 16px;
+  border: 1px solid transparent;
+  border-color: transparent transparent rgba(0, 0, 0, 0.1) transparent;
+  cursor: pointer;
+}
+
+/* Style items (options): */
+.select-items {
+  position: absolute;
+  background-color: DodgerBlue;
+  top: 100%;
+  left: 0;
+  right: 0;
+  z-index: 99;
+}
+
+/* Hide the items when the select box is closed: */
+.select-hide {
+  display: none;
+}
+
+.select-items div:hover, .same-as-selected {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.theme-definition-form {
+
+    display:block;
+    width:100%;
+    height:100%
+}
+
+.theme-definition {
+    float:right;
+    display:block;
+    margin-left:1%;
+    width:84%;
+    height:100%;
+
+}
+
+
+.theme-definition-naissance {
+
+    float:left;
+    width:50%;
+    height:100%;
+}
+
+.theme-definition-date-naissance {
+
+    display:inline-block;
+    width:100%;
+    height:10%;
+}
+
+.theme-definition-lieu-naissance {
+
+    display:inline-block;
+    width:100%;
+    height:70%;
+
+}
+
+.theme-definition-lieu-naissance #map {
+
+    display:block;
+    width:100%;
+    height:100%;
+
+}
+
+.theme-definition-astrologies {
+
+    float:right;
+    display:block;
+    width:49%;
+    height:100%;
+    margin-left:1%;
+
+}
+
+.theme-definition-sidereal-astrology {
+
+    display:inline-block;
+    width:100%;
+    height:50%;
+
+}
+
+.theme-definition-tropical-astrology {
+
+    display:inline-block;
+    width:100%;
+    height:50%
+
+}
+
+.menu-buttons {
+    margin-top:10%;
+}
+
+
+.menu-buttons button {
+  background-color: #4CAF50; /* Green background */
+  border: 1px solid green; /* Green border */
+  color: black; /* White text */
+  padding: 10px 24px; /* Some padding */
+  margin: 5% 5% auto ;
+  cursor: pointer; /* Pointer/hand icon */
+
+  font-size: 12px;
+}
+
+/* Clear floats (clearfix hack) */
+.menu-buttons:after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+.menu-buttons button:not(:last-child) {
+  border-right: none; /* Prevent double borders */
+}
+
+/* Add a background color on hover */
+.menu-buttons button:hover {
+  background-color: #3e8e41;
+}
+
+
+label {
+
+    font-family: 'Helvetica Neue', sans-serif;
+}

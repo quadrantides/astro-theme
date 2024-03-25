@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Astro</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+    {% load static %}
+	{% load crispy_forms_tags %}
+	{% load i18n %}
+	{% load l10n %}
+
+    <!-- Web Fonts -->
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,400,700,300&amp;subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Raleway:700,400,300' rel='stylesheet' type='text/css'>
+
+    <!-- Bootstrap core CSS -->
+    <link href="{% static 'master/bootstrap/css/bootstrap.css' %}" rel="stylesheet">
+
+    <!-- Font Awesome CSS -->
+    <link href="{% static 'master/fonts/font-awesome/css/font-awesome.css' %}" rel="stylesheet">
+
+    <!-- Plugins -->
+    <link href="{% static 'master/css/animations.css' %}" rel="stylesheet">
+
+    <!-- Worthy core CSS file -->
+    <link href="{% static 'master/css/style.css' %}" rel="stylesheet">
+
+    <!-- Custom css -->
+    <link href="{% static 'master/css/custom.css' %}" rel="stylesheet">
+
+	<!-- Add icon library -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+	<!-- Leaflet css -->
+	<link href="{% static 'leaflet/0.7.5/leaflet.css' %}" rel="stylesheet">
+     <!--[if lte IE 8]><link type="text/css" rel="stylesheet" href="{% static 'leaflet/leaflet.ie.css' %}" /><![endif]-->
+
+	<!-- Custom css -->
+	<link rel="stylesheet" type="text/css" href="{% static 'theme/css/login.css' %}">
+    <link href="{% static 'theme/css/map.css' %}" rel="stylesheet">
+    <link href="{% static 'theme/css/buttons.css' %}" rel="stylesheet">
+	<link href="{% static 'theme/css/celebrities.css' %}" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="{% static 'theme/css/base.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'theme/css/celebrity/settings.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'theme/css/celebrity/cycles.css' %}">
+
+</head>
+<body class="fixed-header-on">
+
+	<!-- header start -->
+	<!-- ================ -->
+	<header class="header   navbar ">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-3">
+
+					<!-- header-left start -->
+					<!-- ================ -->
+					<div class="header-left clearfix">
+
+						<!-- logo -->
+						<!--<div class="logo smooth-scroll" style="width:20px;height:20px">-->
+							<!--<a href="#banner"><img id="logo" src="static/images/logo.png" alt="transcend"></a>-->
+						<!--</div>-->
+
+						<!-- name-and-slogan -->
+						<div>
+							<div class="site-name"><a href="/">AstrologiesLab</a></div>
+							<div class="site-slogan">Tropical, sidereal and vedic, by <a target="_blank" href="http://quadrantides.com">Quadrantides</a></div>
+						</div>
+
+					</div>
+					<!-- header-left end -->
+
+				</div>
+				<div class="col-md-7">
+					<!-- header-right start -->
+					<!-- ================ -->
+					<div class="header-right clearfix">
+
+						<!-- main-navigation start -->
+						<!-- ================ -->
+						<div class="main-navigation animated">
+
+							<!-- navbar start -->
+							<!-- ================ -->
+							<nav class="navbar navbar-default" role="navigation">
+								<div class="container-fluid">
+
+									<!-- Toggle get grouped for better mobile display -->
+									<div class="navbar-header">
+										<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse-1">
+											<span class="sr-only">Toggle navigation</span>
+											<span class="icon-bar"></span>
+											<span class="icon-bar"></span>
+											<span class="icon-bar"></span>
+										</button>
+									</div>
+
+									<!-- Collect the nav links, forms, and other content for toggling -->
+									<div class="collapse navbar-collapse scrollspy smooth-scroll" id="navbar-collapse-1">
+										<ul class="nav navbar-nav navbar-left">
+											<!--<li class="active"><a href="#banner">Home</a></li>-->
+											<!--<li><a href="#services">Services</a></li>-->
+											 <!--<li><a href="#parameters">Parameters</a></li>-->
+											<li><a href="/theme">{% trans "THEMES" %}</a></li>
+											<li><a href="/theme/transit">{% trans "TRANSITS" %}</a></li>
+											<li><a href="/products">{% trans "PRODUCTS" %}</a></li>
+											<!--<li><a href="#ephemerids">Ephemerids</a></li>-->
+											<!--<li><a href="#concepts">aboutConcepts</a></li>-->
+											<!--<li><a href="#clients">Clients</a></li>-->
+											<!--<li><a href="#about">aboutUs</a></li>-->
+											<li><a href="/contact">CONTACT</a></li>
+										</ul>
+									</div>
+
+								</div>
+							</nav>
+							<!-- navbar end -->
+
+						</div>
+						<!-- main-navigation end -->
+
+					</div>
+					<!-- header-right end -->
+				</div>
+				<div class="col-md-2">
+					<div class="header-right" style="margin-top: 20px;">
+					  {% if user.is_anonymous %}
+						<span style="margin: 0 auto;" class='align-middle'><a href="{% url 'login' %}">Se connecter</a></span>
+						<!--<div  class="site-slogan">pas encore de compte ? <a href=""> cr&eacuteéez le v&ocirc;tre</a></div>-->
+					  {% else %}
+					  <span style="margin: 0 auto;" class='align-middle'><b>{{ user }}, </b><a href="{% url 'logout' %}">Déconnexion</a></span>
+					  {% endif %}
+					</div>
+				</div>
+			</div>
+		</div>
+	</header>
+	<!-- header end -->
+
+
+	{% block section %}
+
+	{% endblock %}
+
+
+	<!-- footer start -->
+	<!-- ================ -->
+	<footer>
+		<p class="text-center text-align-bottom">Copyright © 2020 AstrologiesLab by <a target="_blank" href="http://quadrantides.com">Quadrantides</a>.</p>
+	</footer>
+	<!-- footer end -->
+
+	<!-- JavaScript files placed at the end of the document so the pages load faster
+	================================================== -->
+
+	<!-- Jquery and Bootstap core js files -->
+	<script type="text/javascript" src="{% static 'master/plugins/jquery.min.js' %}"></script>
+	<script type="text/javascript" src="{% static 'master/bootstrap/js/bootstrap.min.js' %}"></script>
+
+	<!-- Modernizr javascript -->
+	<script type="text/javascript" src="{% static 'master/plugins/modernizr.js' %}"></script>
+
+	<!-- Isotope javascript -->
+	<script type="text/javascript" src="{% static 'master/plugins/isotope/isotope.pkgd.min.js' %}"></script>
+
+	<!-- Backstretch javascript -->
+	<script type="text/javascript" src="{% static 'master/plugins/jquery.backstretch.min.js' %}"></script>
+
+	<!-- Appear javascript -->
+	<script type="text/javascript" src="{% static 'master/plugins/jquery.appear.js' %}"></script>
+
+	<!-- Initialization of Plugins -->
+	<!--<script type="text/javascript" src="{% static 'master/js/template.js' %}"></script>-->
+
+	{% block extra_js %}
+
+	{% endblock extra_js %}
+
+
+</body>
+</html>

@@ -1,0 +1,145 @@
+{% extends "celebrity/base.html" %}
+{% load i18n %}
+{% load l10n %}
+{% load static %}
+{% load js %}
+{% load crispy_forms_tags %}
+
+{% block index %}
+
+	<div id="celebrity-row" class="section">
+
+        <div class="container" data-animation-effect="fadeIn">
+
+            <h4>{% trans "Transit" %}</h4>
+            <div class="space"></div>
+            <div class="row">
+                <div class="col-md-5">
+
+                    <!--<input type="hidden" id="id_transit_date" class="form-control" name="str_transit_date">-->
+                    <!--<input type="hidden" id="id_transit_time" class="form-control" name="str_transit_time">-->
+                    <div class="cycles-tab">
+                         <!--<h6>-->
+                             <!--<a href="javascript:load_transit( {{ theme.id }}, '{{aspect.get_utc_centered_date_iso }}')">{% trans "Current transit" %}</a>-->
+                         <!--</h6>-->
+                        <form action="{% url 'theme:transit' theme.id %}" class="uniForm" method="post" id="id-new-transit-form">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    {% crispy parameters-form %}
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-5">
+                                    {% crispy date_form %}
+                                    <label class="requiredField" for="date">{% trans "New Transit Date" %}
+                                        <span class="asteriskField">*</span>
+                                    </label>
+                                    <div class="">
+                                        <input type="date" id="date" class="form-control" name="str_transit_date" onchange="set_new_date(value)" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="requiredField" for="time">{% trans "Time (local)" %}
+                                        <span class="asteriskField">*</span>
+                                    </label>
+                                    <div class="">
+                                        <input type="time" id="time" class="form-control black-text-color numberinput" name="str_transit_time" onchange="set_new_time(value)" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="">
+                                        <button type="submit" class="btn btn-primary">{% trans "DISPLAY" %}</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+
+                            </div>
+                        </form>
+                    </div>
+                    <div class="cycles-tab">
+                        <h6>{% trans "Transits related to the following cycles of interest" %}</h6>
+                        {% for cycle in cycles %}
+                          <button class="cycles-tablinks" onclick="openCycle(event, '{{cycle.tab_name}}')">{{cycle.tab_name}}</button>
+                        {% endfor %}
+                    </div>
+
+                    {% for cycle in cycles %}
+
+                        <div id="{{cycle.tab_name}}" class="cycles-tabcontent">
+                            <p>
+                                {% if cycle.is_internal and cycle.aspect.is_conjunction %}
+                                    {% blocktrans with name=cycle.aspect.name conjunction_type=cycle.aspect.conjunction_type orb=cycle.aspect.orb count counter=cycle.aspect.next|length %}
+                                            One {{ conjunction_type }} {{ name }}
+                                        {% plural %}
+                                            List of {{ conjunction_type }} {{ name }}
+                                    {% endblocktrans %}
+                                {% else %}
+                                    {% blocktrans with name=cycle.aspect.name conjunction_type=cycle.aspect.conjunction_type orb=cycle.aspect.orb count counter=cycle.aspect.next|length %}
+                                            One {{ name }}
+                                        {% plural %}
+                                            List of {{ name }}
+                                    {% endblocktrans %}
+
+                                {% endif %}
+                                (orb = {{ cycle.aspect.orb }})
+                            </p>
+
+                            <ul id="ul-cycle">
+                                {% if cycle.is_internal and cycle.aspect.is_conjunction %}
+                                    {% for next in cycle.aspect.next %}
+                                        <li class="li-cycle"><span class="caret-cycle">{{ next.aspect.get_start_year }}</span>
+                                            <ul class="nested-cycle-disabled">
+                                                <li><a href="javascript:load_transit( {{ theme.id }}, '{{next.aspect.get_utc_centered_date_iso }}')">{{ next.aspect.start|localize }} / {{ next.aspect.end|localize  }}</a></li>
+                                            </ul>
+                                        </li>
+                                    {% endfor %}
+
+                                {% else %}
+                                    {% for aspect in cycle.aspect.next %}
+                                        <li class="li-cycle"><span class="caret-cycle">{{ aspect.get_start_year }}</span>
+                                            <ul class="nested-cycle">
+                                                <li><a href="javascript:load_transit( {{ theme.id }}, '{{aspect.get_utc_centered_date_iso }}')">{{ aspect.start|localize }} / {{ aspect.end|localize  }}</a></li>
+                                            </ul>
+                                        </li>
+                                    {% endfor %}
+
+                                {% endif %}
+                            </ul>
+                        </div>
+
+                    {% endfor %}
+
+                </div>
+                <div class="col-md-7">
+                    {% block transit %}
+                    {% endblock %}
+                </div>
+            </div>
+
+        </div>
+
+	</div>
+
+{% endblock %}
+
+	<script type="text/javascript" src="{% static 'theme/js/date.js' %}"></script>
+	<script type="text/javascript" src="{% static 'theme/js/transit.js' %}"></script>
+    <script type="text/javascript" src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+	<script type="text/javascript" src="{% static 'theme/js/initialize.js' %}"></script>
+	<script type="text/javascript" src="{% static 'theme/js/cycles.js' %}"></script>
+
+	<script>
+
+	set_default_transit_date("date", "time")
+	if ({{show.tropical | js}}) {
+			initialize("transit-tropical-wheel", graph_tropical, config);
+	}
+	if ({{show.sidereal | js}}) {
+			initialize("transit-sidereal-wheel", graph_sidereal, config);
+	}
+	if ({{show.compounded | js}}) {
+			initialize("transit-compounded-wheel", graph_compounded, config);
+	}
+
+	</script>

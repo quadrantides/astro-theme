@@ -1,0 +1,250 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load l10n %}
+{% load static %}
+{% load js %}
+{% load crispy_forms_tags %}
+
+{% block section %}
+
+	<div id="celebrity-row" class="section">
+        <!--<div class="container" data-animation-effect="fadeIn">-->
+            <!--<div class="row">-->
+                <!--<div class="col-md-12">-->
+                    <!--<div class=media">-->
+                        <!--<p>Sur cette page, vous pouvez :</p>-->
+                        <!--<ul>-->
+                            <!--<li>Voir le thème que vous avez choisi,</li>-->
+                            <!--<li>Modifier sa configuration de base,</li>-->
+                            <!--<li>Le télécharger sous forme de fichier pdf.</li>-->
+                        <!--</ul>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+
+        <!--</div>-->
+        <div class="container" data-animation-effect="fadeIn">
+            {% if theme %}
+            <h4>Thème</h4>
+                <div class="row">
+                    <div class="col-md-10">
+                        <h6>{{ theme.full_name }}, {{ theme.further_information }}</h6>
+                    </div>
+                    <div class="col-md-2">
+                        <h6>
+                            <form action="{% url 'theme:generate_pdf' theme.id %}" method="post">
+                                {% csrf_token %}
+                                <span>Télécharger le rapport
+                                    <button class="btn-theme-download"><i class="fa fa-download"></i></button>
+                                </span>
+                            </form>
+                        </h6>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <p>Date de naissance : <b>{{ theme.date }}</b></p>
+                        <p>Lieu de naissance : <b>{{ theme.location.city }}</b>, {{ theme.location.context }}, <b><i>latitude : {{ theme.location.latitude }}, longitude : {{ theme.location.longitude }}</i></b></p>
+                    </div>
+                </div>
+                <div class="space"></div>
+                <div class="row">
+                    <script>
+                         var config = {{graphics.config | safe}};
+                    </script>
+                    {% if show.tropical %}
+
+                        <div class="col-md-7">
+
+                            <div id="tropical-wheel">
+
+                            </div>
+                            <script>
+                                 var graph_tropical = {{graphics.tropical | safe}};
+                            </script>
+                        </div>
+
+                    {% endif %}
+
+                    {% if show.sidereal %}
+
+                        <div class="col-md-7">
+
+                            <div id="sidereal-wheel">
+
+                            </div>
+                            <script>
+                                 var graph_sidereal = {{graphics.sidereal | safe}};
+                            </script>
+                        </div>
+
+                    {% endif %}
+
+                    {% if show.compounded %}
+
+                        <div class="col-md-7">
+
+                            <div id="compounded-wheel">
+
+                            </div>
+                            <script>
+                                 var graph = {{graphics.compounded | safe}};
+                            </script>
+                        </div>
+
+                    {% endif %}
+
+                    <div class="col-md-5">
+
+                        <h4>{% trans "Transit" %}</h4>
+                        <input type="hidden" id="id_transit_date" class="form-control" name="str_transit_date">
+                        <input type="hidden" id="id_transit_time" class="form-control" name="str_transit_time">
+                        <div class="cycles-tab">
+                             <!--<h6>-->
+                                 <!--<a href="javascript:load_transit( {{ theme.id }}, '{{aspect.get_utc_centered_date_iso }}')">{% trans "Current transit" %}</a>-->
+                             <!--</h6>-->
+                            <form action="{% url 'theme:transit' theme.id %}" class="uniForm" method="post" id="id-new-transit-form">
+                                <div class="row">
+                                    <div class="col-md-5">
+                                        {% crispy date_form %}
+                                        <label class="requiredField" for="date">{% trans "Date" %}
+                                            <span class="asteriskField">*</span>
+                                        </label>
+                                        <div class="">
+                                            <input type="date" id="date" class="form-control" name="str_transit_date" onchange="set_new_date(value)" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label class="requiredField" for="time">{% trans "Local time" %}
+                                            <span class="asteriskField">*</span>
+                                        </label>
+                                        <div class="">
+                                            <input type="time" id="time" class="form-control black-text-color numberinput" name="str_transit_time" onchange="set_new_time(value)" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="">
+                                            <button type="submit" class="btn btn-primary">{% trans "DISPLAY" %}</button>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="cycles-tab">
+                            <h6>{% trans "Transits related to the following cycles of interest" %}</h6>
+                            {% for cycle in cycles %}
+                              <button class="cycles-tablinks" onclick="openCycle(event, '{{cycle.tab_name}}')">{{cycle.tab_name}}</button>
+                            {% endfor %}
+                        </div>
+
+                        {% for cycle in cycles %}
+
+                            <div id="{{cycle.tab_name}}" class="cycles-tabcontent">
+                                <p>
+                                    {% if cycle.is_internal and cycle.aspect.is_conjunction %}
+                                        {% blocktrans with name=cycle.aspect.name conjunction_type=cycle.aspect.conjunction_type orb=cycle.aspect.orb count counter=cycle.aspect.next|length %}
+                                                One {{ conjunction_type }} {{ name }}
+                                            {% plural %}
+                                                List of {{ conjunction_type }} {{ name }}
+                                        {% endblocktrans %}
+                                    {% else %}
+                                        {% blocktrans with name=cycle.aspect.name conjunction_type=cycle.aspect.conjunction_type orb=cycle.aspect.orb count counter=cycle.aspect.next|length %}
+                                                One {{ name }}
+                                            {% plural %}
+                                                List of {{ name }}
+                                        {% endblocktrans %}
+
+                                    {% endif %}
+                                    (orb = {{ cycle.aspect.orb }})
+                                </p>
+
+                                <ul id="ul-cycle">
+                                    {% if cycle.is_internal and cycle.aspect.is_conjunction %}
+                                        {% for next in cycle.aspect.next %}
+                                            <li class="li-cycle"><span class="caret-cycle">{{ next.aspect.get_start_year }}</span>
+                                                <ul class="nested-cycle">
+                                                    <li onclick="javascript:load_transit( {{ theme.id }}, '{{next.aspect.get_utc_centered_date_iso }}')"><span>{{ next.aspect.start|localize }} / {{ next.aspect.end|localize  }}</span></li>
+                                                </ul>
+                                            </li>
+                                        {% endfor %}
+
+                                    {% else %}
+                                        {% for aspect in cycle.aspect.next %}
+                                            <li class="li-cycle"><span class="caret-cycle">{{ aspect.get_start_year }}</span>
+                                                <ul class="nested-cycle">
+                                                    <li><a href="javascript:load_transit( {{ theme.id }}, '{{aspect.get_utc_centered_date_iso }}')">{{ aspect.start|localize }} / {{ aspect.end|localize  }}</a></li>
+                                                </ul>
+                                            </li>
+                                        {% endfor %}
+
+                                    {% endif %}
+                                </ul>
+                            </div>
+
+                        {% endfor %}
+
+
+                    </div>
+
+                </div>
+                <div class="row">
+
+                    <h6>Vous pouvez modifier le thème</h6>
+                    <form action="{% url 'theme:theme' theme.id %}" method="post" class="form-inline">
+                        <div class="align-flex-end-selection-group">
+                            <div class="col-md-6">
+                                {% crispy parameters-form %}
+                            </div>
+                            <div class="col-md-2">
+                                <input type="submit" value="APPLIQUER">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            {% else %}
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <p>Veuillez nous excuser, nous ne sommes pas en mesure d'afficher le thème demandé</p>
+                    </div>
+                </div>
+
+            {% endif %}
+
+        </div>
+
+	</div>
+
+{% endblock %}
+
+
+{% block extra_js %}
+
+    <script type="text/javascript" src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+	<script type="text/javascript" src="{% static 'theme/js/initialize.js' %}"></script>
+	<script type="text/javascript" src="{% static 'theme/js/cycles.js' %}"></script>
+	<script type="text/javascript" src="{% static 'theme/js/date.js' %}"></script>
+	<script type="text/javascript" src="{% static 'theme/js/transit.js' %}"></script>
+
+	<script>
+
+    var date_selection = {
+        date : document.getElementById("id_date_hidden").value,
+    }
+	set_birthday_date(date_selection);
+
+	set_default_transit_date("date", "time")
+
+	if ({{show.tropical | js}}) {
+			initialize("tropical-wheel", graph_tropical, config);
+	}
+	if ({{show.sidereal | js}}) {
+			initialize("sidereal-wheel", graph_sidereal, config);
+	}
+	if ({{show.compounded | js}}) {
+			initialize("compounded-wheel", graph_compounded, config);
+	}
+	</script>
+
+{% endblock extra_js %}

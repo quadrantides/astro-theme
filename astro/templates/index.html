@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load static %}
+{% load crispy_forms_tags %}
+						 
+{% block section %}
+
+	<div id="celebrity-row" class="section">
+		<div class="container" data-animation-effect="fadeIn">
+			<div class="row">
+                <div class="col-md-12">
+                    <div class=media">
+						<h5 class="text-center"><span>Notre Lab' est là</span><br>pour faciliter vos interprétations</h5>
+						<p class="lead text-center">que vous travaillez en tropical, sidéral ou védique</p>
+                    </div>
+                </div>
+            </div>
+			<div class="row">
+				<h5>Le thème actuel</h5>
+				<div class="col-md-12">
+                    <script>
+                         var config = {{ config | safe }};
+                         var graph = {{ graph | safe }};
+                    </script>
+					<div id="wheel">
+
+					</div>
+				</div>
+            </div>
+			<div class="row ">
+				<h6>{% trans "You can change of houses system" %}</h6>
+				<form action="{% url 'index' %}" method="post" class="form-inline">
+					<div class="align-flex-end-selection-group">
+						<div class="col-md-3">
+							{% crispy parameters-form %}
+						</div>
+						<div class="col-md-3">
+							<input type="submit" value="APPLIQUER">
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+
+				
+
+{% endblock %}
+
+
+{% block extra_js %}
+
+    <script type="text/javascript" src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+	<script type="text/javascript" src="{% static 'theme/js/initialize.js' %}"></script>
+
+	<script>
+	if (graph != null) {
+			initialize("wheel", graph, config);
+	}
+	</script>
+
+{% endblock extra_js %}

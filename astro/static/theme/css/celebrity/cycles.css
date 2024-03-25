@@ -1,0 +1,96 @@
+.cycles {
+  display: block;
+  padding: 2px 3px;
+  float: left;
+  text-color: "#000",
+  font-size: 11px;
+  font-family: Arial;
+}
+
+ /* Style the tab */
+.cycles-tab {
+  padding: 6px 12px;
+  overflow: hidden;
+  border: 1px solid #ccc;
+  background-color: #f1f1f1;
+}
+
+/* Style the buttons that are used to open the tab content */
+.cycles-tab button {
+  display: inline-block;
+  color: "#000",
+  font-size: 11px;
+  padding: 6px 12px;
+  float: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+/* Change background color of buttons on hover */
+.cycles-tab button:hover {
+  background-color: #ddd;
+}
+
+/* Create an active/current tablink class */
+.cycles-tab button.active {
+  background-color: #ccc;
+}
+
+/* Style the tab content */
+.cycles-tabcontent {
+  display: none;
+  padding: 6px 12px;
+  border: 1px solid #ccc;
+  border-top: none;
+}
+
+ /* Remove default bullets */
+ul, #ul-cycle {
+  list-style-type: none;
+}
+
+/* Remove margins and padding from the parent ul */
+#ul-cycle {
+  margin: 0;
+  padding: 0;
+}
+
+/* Style the caret/arrow */
+.caret-cycle {
+  display: inline-block;
+  margin-right: 6px;
+  cursor: pointer;
+  user-select: none; /* Prevent text selection */
+}
+
+/* Create the caret/arrow with a unicode, and style it */
+.caret-cycle::before {
+  content: "\25B6";
+  font-size: 8px;
+  color: black;
+  display: inline-block;
+  margin-right: 6px;
+}
+
+/* Rotate the caret/arrow icon when clicked on (using JavaScript) */
+.caret-cycle-down::before {
+  transform: rotate(90deg);
+}
+
+/* Hide the nested list */
+.nested-cycle {
+  display: none;
+  background-color: #fff;
+}
+
+/* Show the nested list when the user clicks on the caret/arrow (with JavaScript) */
+.active {
+  display: block;
+}
+
+/* Create the caret/arrow with a unicode, and style it */
+.li-cycle {
+  display: inline-block;
+}
